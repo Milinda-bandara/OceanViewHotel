@@ -13,30 +13,30 @@ public class ReservationDAO {
             int roomId, String checkIn, String checkOut,
             double totalBill) {
 
-try (Connection con = DBConnection.getConnection()) {
-
-String sql = "INSERT INTO reservations " +
- "(guest_name, address, contact_number, room_id, check_in, check_out, total_bill) " +
- "VALUES (?, ?, ?, ?, ?, ?, ?)";
-
-PreparedStatement ps = con.prepareStatement(sql);
-ps.setString(1, guestName);
-ps.setString(2, address);
-ps.setString(3, contact);
-ps.setInt(4, roomId);
-ps.setString(5, checkIn);
-ps.setString(6, checkOut);
-ps.setDouble(7, totalBill);
-
-ps.executeUpdate();
-
-System.out.println("Reservation added successfully");
-
-} catch (Exception e) {
-System.out.println("ERROR adding reservation");
-e.printStackTrace();
-}
-}
+		try (Connection con = DBConnection.getConnection()) {
+		
+		String sql = "INSERT INTO reservations " +
+		 "(guest_name, address, contact_number, room_id, check_in, check_out, total_bill) " +
+		 "VALUES (?, ?, ?, ?, ?, ?, ?)";
+		
+		PreparedStatement ps = con.prepareStatement(sql);
+		ps.setString(1, guestName);
+		ps.setString(2, address);
+		ps.setString(3, contact);
+		ps.setInt(4, roomId);
+		ps.setString(5, checkIn);
+		ps.setString(6, checkOut);
+		ps.setDouble(7, totalBill);
+		
+		ps.executeUpdate();
+		
+		System.out.println("Reservation added successfully");
+		
+		} catch (Exception e) {
+		System.out.println("ERROR adding reservation");
+		e.printStackTrace();
+		}
+		}
 
     public List<Reservation> getAllReservations() {
 
