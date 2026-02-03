@@ -27,6 +27,7 @@
     <ul>
         <li><a href="addReservation.jsp">Add Reservation</a></li>
         <li><a href="calculateBill.jsp">Calculate Bill</a></li>
+        <li><a href="viewReservations.jsp">View All Reservations</a></li>
     </ul>
 </div>
 
