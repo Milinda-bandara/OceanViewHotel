@@ -10,6 +10,16 @@
 
 <div class="container">
     <form method="post" action="../AddUserServlet">
+
+        <label>Full Name</label>
+        <input type="text" name="fullName" required>
+
+        <label>Address</label>
+        <input type="text" name="address" required>
+
+        <label>Date of Birth</label>
+        <input type="date" name="dob" required>
+
         <label>Username</label>
         <input type="text" name="username" required>
 
@@ -26,3 +36,6 @@
 
 </body>
 </html>
+
+
+ 

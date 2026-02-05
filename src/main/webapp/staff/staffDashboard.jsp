@@ -3,6 +3,7 @@
 <%@ page import="com.oceanview.dao.RoomDAO" %>
 <%@ page import="com.oceanview.model.Room" %>
 <%@ page import="com.oceanview.model.User" %>
+<%@ page import="java.util.List, com.oceanview.dao.RoomDAO, com.oceanview.model.Room" %>
 
 <%
     User user = (User) session.getAttribute("user");
