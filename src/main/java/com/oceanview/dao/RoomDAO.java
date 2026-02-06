@@ -61,4 +61,50 @@ public class RoomDAO {
 
         return list;
     }
+    
+    public void updateRoomStatus(int roomId, String status) {
+
+        try (Connection con = DBConnection.getConnection()) {
+
+            String sql = "UPDATE rooms SET status = ? WHERE room_id = ?";
+            PreparedStatement ps = con.prepareStatement(sql);
+
+            ps.setString(1, status);
+            ps.setInt(2, roomId);
+
+            ps.executeUpdate();
+
+            System.out.println("Room " + roomId + " status updated to " + status);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public List<Room> getAvailableRooms() {
+
+        List<Room> list = new ArrayList<>();
+
+        try (Connection con = DBConnection.getConnection()) {
+
+            String sql = "SELECT * FROM rooms WHERE status = 'AVAILABLE'";
+            PreparedStatement ps = con.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+                Room r = new Room();
+                r.setRoomId(rs.getInt("room_id"));
+                r.setRoomType(rs.getString("room_type"));
+                r.setPricePerNight(rs.getDouble("price_per_night"));
+                r.setStatus(rs.getString("status"));
+                list.add(r);
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return list;
+    }
+
 }

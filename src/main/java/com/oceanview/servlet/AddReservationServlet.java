@@ -9,6 +9,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 import com.oceanview.dao.ReservationDAO;
+import com.oceanview.dao.RoomDAO;
 
 @WebServlet("/AddReservationServlet")
 public class AddReservationServlet extends HttpServlet {
@@ -24,12 +25,20 @@ public class AddReservationServlet extends HttpServlet {
         String checkIn = request.getParameter("checkIn");
         String checkOut = request.getParameter("checkOut");
 
-        // Temporary bill (can calculate later)
         double totalBill = 0.0;
 
-        ReservationDAO dao = new ReservationDAO();
-        dao.addReservation(guestName, address, contact, roomId, checkIn, checkOut, totalBill);
+        ReservationDAO reservationDAO = new ReservationDAO();
+        RoomDAO roomDAO = new RoomDAO();
+
+        // 1️⃣ Add reservation
+        reservationDAO.addReservation(
+            guestName, address, contact, roomId, checkIn, checkOut, totalBill
+        );
+
+        // 2️⃣ Mark room as BOOKED
+        roomDAO.updateRoomStatus(roomId, "BOOKED");
 
         response.sendRedirect(request.getContextPath() + "/staff/staffDashboard.jsp");
     }
 }
+

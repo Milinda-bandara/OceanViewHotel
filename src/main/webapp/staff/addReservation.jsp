@@ -1,3 +1,7 @@
+<%@ page import="java.util.List" %>
+<%@ page import="com.oceanview.dao.RoomDAO" %>
+<%@ page import="com.oceanview.model.Room" %>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -20,8 +24,19 @@
     <label>Contact Number</label>
     <input type="text" name="contact" required>
 
-    <label>Room ID</label>
-    <input type="number" name="roomId" required>
+    <label>Room</label>
+<select name="roomId" required>
+<%
+    RoomDAO dao = new RoomDAO();
+    List<Room> rooms = dao.getAvailableRooms();
+    for(Room r : rooms) {
+%>
+    <option value="<%= r.getRoomId() %>">
+        Room <%= r.getRoomId() %> - <%= r.getRoomType() %> (Rs.<%= r.getPricePerNight() %>)
+    </option>
+<% } %>
+</select>
+
 
     <label>Check-in Date</label>
     <input type="date" name="checkIn" required>

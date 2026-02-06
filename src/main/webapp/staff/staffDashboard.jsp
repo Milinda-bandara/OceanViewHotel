@@ -45,6 +45,7 @@
         <th>Room Type</th>
         <th>Price Per Night</th>
         <th>Status</th>
+        <th>Action</th>
         
     </tr>
 
@@ -54,13 +55,27 @@
 
     for (Room r : list) {
 %>
-    <tr>
-        <td><%= r.getRoomId() %></td>
-        <td><%= r.getRoomType() %></td>
-        <td><%= r.getPricePerNight() %></td>
-        <td><%= r.getStatus() %></td>
-        
-    </tr>
+   <tr>
+    <td><%= r.getRoomId() %></td>
+    <td><%= r.getRoomType() %></td>
+    <td><%= r.getPricePerNight() %></td>
+    <td><%= r.getStatus() %></td>
+
+    <td>
+        <form method="post" action="<%= request.getContextPath() %>/UpdateRoomStatusServlet">
+            <input type="hidden" name="roomId" value="<%= r.getRoomId() %>">
+
+            <select name="status">
+                <option value="AVAILABLE">AVAILABLE</option>
+                <option value="BOOKED">BOOKED</option>
+                <option value="MAINTENANCE">MAINTENANCE</option>
+            </select>
+
+            <button type="submit">Update</button>
+        </form>
+    </td>
+</tr>
+
 <%
     }
 %>
