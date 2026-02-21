@@ -1,0 +1,33 @@
+/* Body */
+body {
+    font-family: Arial, sans-serif;
+    background: #f8f9fa;
+    color: #333;
+}
+
+/* Card */
+.card {
+    border-radius: 15px;
+}
+
+/* Page Title */
+h2.fw-bold {
+    font-size: 2rem;
+}
+
+/* List Items */
+.list-group-item {
+    font-size: 0.95rem;
+}
+
+/* Footer */
+.footer {
+    padding: 15px 0;
+    background: #343a40;
+    color: #fff;
+}
+
+/* Buttons */
+.btn-secondary i {
+    margin-right: 5px;
+}
