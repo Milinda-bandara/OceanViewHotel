@@ -1,0 +1,51 @@
+body {
+    font-family: Arial, sans-serif;
+    background: #f8f9fa;
+}
+
+/* Card Design */
+.card {
+    border-radius: 15px;
+}
+
+/* Bill Layout */
+.bill-row {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 12px;
+    font-size: 16px;
+}
+
+.bill-total {
+    display: flex;
+    justify-content: space-between;
+    font-size: 20px;
+    font-weight: bold;
+    color: #0d6efd;
+}
+
+/* Footer */
+.footer {
+    padding: 15px 0;
+    background: #343a40;
+    color: white;
+}
+
+/* Print Style */
+@media print {
+
+    .navbar,
+    .footer,
+    .btn {
+        display: none;
+    }
+
+    body {
+        background: white;
+    }
+
+    .card {
+        box-shadow: none;
+        border: 1px solid #ddd;
+    }
+}
