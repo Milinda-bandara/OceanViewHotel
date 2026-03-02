@@ -14,6 +14,7 @@
 
 <!-- Custom CSS -->
 <link rel="stylesheet" href="css/help.css">
+
 </head>
 <body>
 
@@ -31,23 +32,73 @@
     <!-- Page Title -->
     <div class="text-center mb-4">
         <h2 class="fw-bold">Help & Usage Guide</h2>
-        <p class="text-muted">Learn how to use the system</p>
+        <p class="text-muted">Learn how to use the Hotel Reservation System</p>
     </div>
 
     <!-- Help Card -->
-    <div class="card shadow-lg border-0 mx-auto" style="max-width: 700px;">
+    <div class="card shadow-lg border-0 mx-auto" style="max-width: 800px;">
         <div class="card-body p-4">
 
-            <h4 class="mb-3">How to use the system</h4>
-            <ul class="list-group list-group-flush mb-3">
-                <li class="list-group-item">Login using your provided username and password.</li>
-                <li class="list-group-item">Admins can manage users, rooms and view all reservations.</li>
-                <li class="list-group-item">Staff can create reservations and calculate guest bills.</li>
+            <!-- System Overview -->
+            <h4 class="mb-3"><i class="bi bi-info-circle"></i> System Overview</h4>
+            <p>
+                The OceanView Hotel Management System helps manage hotel operations such as
+                room reservations, user management, billing, and room status updates.
+            </p>
+
+            <hr>
+
+            <!-- Login Guide -->
+            <h5><i class="bi bi-box-arrow-in-right"></i> Login Instructions</h5>
+            <ul class="list-group mb-3">
+                <li class="list-group-item">Open the login page.</li>
+                <li class="list-group-item">Enter your username and password.</li>
+                <li class="list-group-item">Click the Login button.</li>
+                <li class="list-group-item">You will be redirected to your dashboard.</li>
+            </ul>
+
+            <!-- Admin Guide -->
+            <h5><i class="bi bi-person-gear"></i> Admin Functions</h5>
+            <ul class="list-group mb-3">
+                <li class="list-group-item">Add new staff users.</li>
+                <li class="list-group-item">Manage room details.</li>
+                <li class="list-group-item">View all reservations.</li>
+                <li class="list-group-item">Update room status (Available / Booked).</li>
+                <li class="list-group-item">Monitor hotel operations.</li>
+            </ul>
+
+            <!-- Staff Guide -->
+            <h5><i class="bi bi-person-workspace"></i> Staff Functions</h5>
+            <ul class="list-group mb-3">
+                <li class="list-group-item">Create new reservations.</li>
+                <li class="list-group-item">Assign rooms to guests.</li>
+                <li class="list-group-item">Calculate guest bills.</li>
+                <li class="list-group-item">Print bill summary.</li>
+                <li class="list-group-item">View reservation records.</li>
+            </ul>
+
+            <!-- Important Tips -->
+            <h5><i class="bi bi-exclamation-circle"></i> Important Tips</h5>
+            <ul class="list-group mb-3">
+                <li class="list-group-item">Always verify guest information before saving.</li>
+                <li class="list-group-item">Update room status after checkout.</li>
+                <li class="list-group-item">Do not share login credentials.</li>
                 <li class="list-group-item">Always logout after finishing your work.</li>
             </ul>
 
+            <!-- System Features -->
+            <h5><i class="bi bi-stars"></i> Key Features</h5>
+            <ul class="list-group mb-4">
+                <li class="list-group-item">User Management System</li>
+                <li class="list-group-item">Room Reservation Management</li>
+                <li class="list-group-item">Billing System</li>
+                <li class="list-group-item">Admin & Staff Dashboards</li>
+                <li class="list-group-item">Real-time Room Status Tracking</li>
+            </ul>
+
+            <!-- Back Button -->
             <div class="d-flex justify-content-end">
-                <a href="login.jsp" class="btn btn-secondary">
+                <a href="login.jsp" class="btn btn-primary">
                     <i class="bi bi-arrow-left"></i> Back to Login
                 </a>
             </div>

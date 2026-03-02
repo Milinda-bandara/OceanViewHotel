@@ -104,4 +104,69 @@ public class ReservationDAO {
             e.printStackTrace();
         }
     }
+    public int getTotalReservations() {
+
+        int count = 0;
+
+        try (Connection con = DBConnection.getConnection()) {
+
+            String sql = "SELECT COUNT(*) FROM reservations";
+            PreparedStatement ps = con.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+
+            if (rs.next()) {
+                count = rs.getInt(1);
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return count;
+    }
+    public double getTotalRevenue() {
+
+        double total = 0;
+
+        try (Connection con = DBConnection.getConnection()) {
+
+            String sql = "SELECT SUM(total_bill) FROM reservations";
+            PreparedStatement ps = con.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+
+            if (rs.next()) {
+                total = rs.getDouble(1);
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return total;
+    }
+    public int[] getMonthlyReservations() {
+
+        int[] months = new int[12];
+
+        try (Connection con = DBConnection.getConnection()) {
+
+            String sql = "SELECT MONTH(check_in) as month, COUNT(*) as total "
+                       + "FROM reservations GROUP BY MONTH(check_in)";
+
+            PreparedStatement ps = con.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+                int month = rs.getInt("month");
+                int total = rs.getInt("total");
+
+                months[month - 1] = total;
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return months;
+    }
 }

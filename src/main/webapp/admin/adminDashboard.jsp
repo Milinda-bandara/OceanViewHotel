@@ -1,14 +1,29 @@
 <%@ page import="com.oceanview.model.User" %>
 <%@ page import="java.util.List" %>
 <%@ page import="com.oceanview.dao.UserDAO" %>
+<%@ page import="com.oceanview.dao.RoomDAO" %>
+<%@ page import="com.oceanview.dao.ReservationDAO" %>
 
 <%
-    // Session security check (unchanged)
+    // Session security check
     User user = (User) session.getAttribute("user");
     if(user == null || !"ADMIN".equals(user.getRole())) {
         response.sendRedirect("../login.jsp");
         return;
     }
+
+    // Dashboard Data
+    UserDAO userDAO = new UserDAO();
+    RoomDAO roomDAO = new RoomDAO();
+    ReservationDAO reservationDAO = new ReservationDAO();
+
+    int totalUsers = userDAO.getTotalUsers();
+    int totalRooms = roomDAO.getTotalRooms();
+    int availableRooms = roomDAO.countAvailableRooms();
+    int bookedRooms = roomDAO.countBookedRooms();
+    int totalReservations = reservationDAO.getTotalReservations();
+
+    List<User> users = userDAO.getAllUsers();
 %>
 
 <!DOCTYPE html>
@@ -19,14 +34,11 @@
 
 <title>Admin Dashboard</title>
 
-<!-- Bootstrap CSS -->
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-
-<!-- Bootstrap Icons -->
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
-
-<!-- Custom CSS -->
 <link rel="stylesheet" href="../css/admindashboard.css">
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 </head>
 <body>
@@ -52,13 +64,58 @@
 
 <div class="container mt-4">
 
-    <!-- Welcome Section -->
+    <!-- Welcome -->
     <div class="mb-4">
         <h3 class="fw-bold">Welcome, Admin</h3>
-        <p class="text-muted">Manage users, rooms, and reservations</p>
+        <p class="text-muted">System overview and management</p>
     </div>
 
-    <!-- Dashboard Cards -->
+    <!-- Statistics Cards -->
+    <div class="row g-4 mb-4">
+
+        <div class="col-md-3">
+            <div class="card shadow text-center">
+                <div class="card-body">
+                    <i class="bi bi-people display-5 text-primary"></i>
+                    <h4 class="mt-2"><%= totalUsers %></h4>
+                    <p>Total Users</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="card shadow text-center">
+                <div class="card-body">
+                    <i class="bi bi-door-open display-5 text-success"></i>
+                    <h4 class="mt-2"><%= totalRooms %></h4>
+                    <p>Total Rooms</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="card shadow text-center">
+                <div class="card-body">
+                    <i class="bi bi-journal-check display-5 text-warning"></i>
+                    <h4 class="mt-2"><%= totalReservations %></h4>
+                    <p>Total Reservations</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="card shadow text-center">
+                <div class="card-body">
+                    <i class="bi bi-check-circle display-5 text-info"></i>
+                    <h4 class="mt-2"><%= availableRooms %></h4>
+                    <p>Available Rooms</p>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Management Cards -->
     <div class="row g-4 mb-4">
 
         <div class="col-md-4">
@@ -66,9 +123,7 @@
                 <div class="card-body text-center">
                     <i class="bi bi-person-plus display-5 text-primary"></i>
                     <h5 class="card-title mt-2">Add Staff User</h5>
-                    <a href="addUser.jsp" class="btn btn-primary btn-sm mt-2">
-                        Open
-                    </a>
+                    <a href="addUser.jsp" class="btn btn-primary btn-sm mt-2">Open</a>
                 </div>
             </div>
         </div>
@@ -78,9 +133,7 @@
                 <div class="card-body text-center">
                     <i class="bi bi-door-open display-5 text-success"></i>
                     <h5 class="card-title mt-2">Add Room</h5>
-                    <a href="addRoom.jsp" class="btn btn-success btn-sm mt-2">
-                        Open
-                    </a>
+                    <a href="addRoom.jsp" class="btn btn-success btn-sm mt-2">Open</a>
                 </div>
             </div>
         </div>
@@ -90,13 +143,21 @@
                 <div class="card-body text-center">
                     <i class="bi bi-journal-text display-5 text-warning"></i>
                     <h5 class="card-title mt-2">View Reservations</h5>
-                    <a href="viewReservations.jsp" class="btn btn-warning btn-sm mt-2">
-                        Open
-                    </a>
+                    <a href="viewReservations.jsp" class="btn btn-warning btn-sm mt-2">Open</a>
                 </div>
             </div>
         </div>
 
+    </div>
+
+    <!-- Chart -->
+    <div class="card shadow mb-4">
+        <div class="card-header bg-dark text-white">
+            Room Status Chart
+        </div>
+        <div class="card-body">
+            <canvas id="roomChart"></canvas>
+        </div>
     </div>
 
     <!-- Users Table -->
@@ -124,10 +185,7 @@
                 <tbody>
 
 <%
-    UserDAO dao = new UserDAO();
-    List<User> users = dao.getAllUsers();
-
-    for(User u : users){
+for(User u : users){
 %>
 
 <tr>
@@ -137,6 +195,7 @@
     <td><%= u.getDob() %></td>
     <td><%= u.getRegisterDate() %></td>
     <td><%= u.getUsername() %></td>
+
     <td>
         <% if("ADMIN".equals(u.getRole())) { %>
             <span class="badge bg-danger">ADMIN</span>
@@ -171,7 +230,20 @@
     </div>
 </footer>
 
-<!-- Bootstrap JS -->
+<script>
+const ctx = document.getElementById('roomChart');
+
+new Chart(ctx, {
+    type: 'pie',
+    data: {
+        labels: ['Available Rooms', 'Booked Rooms'],
+        datasets: [{
+            data: [<%= availableRooms %>, <%= bookedRooms %>]
+        }]
+    }
+});
+</script>
+
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 
 </body>

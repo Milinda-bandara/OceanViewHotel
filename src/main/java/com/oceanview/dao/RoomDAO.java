@@ -106,5 +106,60 @@ public class RoomDAO {
 
         return list;
     }
+    public int getTotalRooms() {
+
+        int count = 0;
+
+        try (Connection con = DBConnection.getConnection()) {
+
+            String sql = "SELECT COUNT(*) FROM rooms";
+            PreparedStatement ps = con.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+
+            if (rs.next()) {
+                count = rs.getInt(1);
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return count;
+    }
+    public int countAvailableRooms() {
+        int count = 0;
+        try {
+            Connection con = DBConnection.getConnection();
+            String sql = "SELECT COUNT(*) FROM rooms WHERE status = 'AVAILABLE'";
+            PreparedStatement ps = con.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+
+            if (rs.next()) {
+                count = rs.getInt(1);
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return count;
+    }
+
+    public int countBookedRooms() {
+        int count = 0;
+        try {
+            Connection con = DBConnection.getConnection();
+            String sql = "SELECT COUNT(*) FROM rooms WHERE status = 'BOOKED'";
+            PreparedStatement ps = con.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+
+            if (rs.next()) {
+                count = rs.getInt(1);
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return count;
+    }
 
 }
