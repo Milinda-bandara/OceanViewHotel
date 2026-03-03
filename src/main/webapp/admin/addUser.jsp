@@ -16,13 +16,15 @@
 <link rel="stylesheet" href="../css/admindashboard.css">
 
 </head>
-<body>
+<body class="bg-light">
 
-<!-- Navbar -->
+<!-- ===============================
+     Navbar
+================================ -->
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark shadow">
     <div class="container">
         <a class="navbar-brand fw-bold" href="adminDashboard.jsp">
-            OceanView Admin
+            <i class="bi bi-speedometer2"></i> OceanView Admin
         </a>
     </div>
 </nav>
@@ -36,9 +38,14 @@
     </div>
 
     <!-- Form Card -->
-    <div class="card shadow-lg border-0 mx-auto" style="max-width: 600px;">
+    <div class="card shadow-lg border-0 mx-auto" style="max-width: 650px;">
+        <div class="card-header bg-primary text-white">
+            <i class="bi bi-person-plus"></i> Staff Registration
+        </div>
+
         <div class="card-body p-4">
 
+            <!-- Staff User Form -->
             <form method="post" action="../AddUserServlet">
 
                 <!-- Full Name -->
@@ -47,7 +54,7 @@
                     <input type="text"
                            name="fullName"
                            class="form-control"
-                           placeholder="Enter full name"
+                           placeholder="Enter staff full name"
                            required>
                 </div>
 
@@ -57,7 +64,7 @@
                     <input type="text"
                            name="address"
                            class="form-control"
-                           placeholder="Enter address"
+                           placeholder="Enter home address"
                            required>
                 </div>
 
@@ -76,8 +83,13 @@
                     <input type="text"
                            name="username"
                            class="form-control"
-                           placeholder="Enter username"
+                           placeholder="Create a username"
                            required>
+
+                    <!-- Small helper text -->
+                    <small class="text-muted">
+                        Username should be unique.
+                    </small>
                 </div>
 
                 <!-- Password -->
@@ -86,20 +98,28 @@
                     <input type="password"
                            name="password"
                            class="form-control"
-                           placeholder="Enter password"
+                           placeholder="Enter secure password"
+                           minlength="6"
                            required>
+
+                    <!-- Password guidance -->
+                    <small class="text-muted">
+                        Use at least 6 characters for security.
+                    </small>
                 </div>
 
-                <!-- Hidden Role -->
+                <!-- Hidden Role (system automatically sets STAFF role) -->
                 <input type="hidden" name="role" value="STAFF">
 
                 <!-- Buttons -->
                 <div class="d-flex justify-content-between mt-4">
 
+                    <!-- Back Button -->
                     <a href="adminDashboard.jsp" class="btn btn-secondary">
                         <i class="bi bi-arrow-left"></i> Back
                     </a>
 
+                    <!-- Submit Button -->
                     <button type="submit" class="btn btn-primary">
                         <i class="bi bi-person-plus"></i> Create User
                     </button>
@@ -113,10 +133,12 @@
 
 </div>
 
-<!-- Footer -->
-<footer class="footer mt-5">
+<!-- ===============================
+     Footer
+================================ -->
+<footer class="footer mt-5 bg-dark text-white py-3">
     <div class="container text-center">
-        <p>© 2026 OceanView Hotel Management System</p>
+        <small>© 2026 OceanView Hotel Management System</small>
     </div>
 </footer>
 

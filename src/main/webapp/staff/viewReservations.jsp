@@ -16,8 +16,19 @@
 <!-- Bootstrap Icons -->
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
 
-<!-- Custom CSS -->
-<link rel="stylesheet" href="../css/staffdashboard.css">
+<style>
+    .table-hover tbody tr:hover {
+        background-color: #f2f2f2;
+    }
+    .badge-room {
+        font-size: 0.9rem;
+        padding: 0.4em 0.7em;
+    }
+    .bill-amount {
+        font-weight: 600;
+        color: #198754; /* Bootstrap success green */
+    }
+</style>
 
 </head>
 <body>
@@ -39,15 +50,15 @@
         <p class="text-muted">View and manage all hotel reservations</p>
     </div>
 
-    <!-- Card -->
-    <div class="card shadow-lg border-0">
+    <!-- Reservations Card -->
+    <div class="card shadow-sm border-0">
         <div class="card-header bg-primary text-white">
             Reservation List
         </div>
 
         <div class="card-body table-responsive">
 
-            <table class="table table-hover align-middle">
+            <table class="table table-hover align-middle text-center">
                 <thead class="table-dark">
                     <tr>
                         <th>ID</th>
@@ -60,39 +71,37 @@
                         <th>Total Bill</th>
                     </tr>
                 </thead>
-
                 <tbody>
-
-<%
-    ReservationDAO dao = new ReservationDAO();
-    List<Reservation> list = dao.getAllReservations();
-
-    for (Reservation r : list) {
-%>
-
-<tr>
-    <td><%= r.getReservationId() %></td>
-    <td><%= r.getGuestName() %></td>
-    <td><%= r.getAddress() %></td>
-    <td><%= r.getContactNumber() %></td>
-    <td>
-        <span class="badge bg-info">
-            Room <%= r.getRoomId() %>
-        </span>
-    </td>
-    <td><%= r.getCheckIn() %></td>
-    <td><%= r.getCheckOut() %></td>
-    <td>
-        <span class="fw-bold text-success">
-            Rs. <%= r.getTotalBill() %>
-        </span>
-    </td>
-</tr>
-
-<%
-    }
-%>
-
+                <%
+                    ReservationDAO dao = new ReservationDAO();
+                    List<Reservation> list = dao.getAllReservations();
+                    if(list != null && !list.isEmpty()){
+                        for (Reservation r : list) {
+                %>
+                    <tr>
+                        <td><%= r.getReservationId() %></td>
+                        <td><%= r.getGuestName() %></td>
+                        <td><%= r.getAddress() %></td>
+                        <td><%= r.getContactNumber() %></td>
+                        <td>
+                            <span class="badge bg-info badge-room">
+                                Room <%= r.getRoomId() %>
+                            </span>
+                        </td>
+                        <td><%= r.getCheckIn() %></td>
+                        <td><%= r.getCheckOut() %></td>
+                        <td class="bill-amount">Rs. <%= r.getTotalBill() %></td>
+                    </tr>
+                <%
+                        }
+                    } else {
+                %>
+                    <tr>
+                        <td colspan="8" class="text-center text-muted">No Reservations Found</td>
+                    </tr>
+                <%
+                    }
+                %>
                 </tbody>
             </table>
 
@@ -109,8 +118,8 @@
 </div>
 
 <!-- Footer -->
-<footer class="footer mt-5">
-    <div class="container text-center">
+<footer class="footer mt-5 py-3 bg-light">
+    <div class="container text-center text-muted">
         <p>© 2026 OceanView Hotel System</p>
     </div>
 </footer>

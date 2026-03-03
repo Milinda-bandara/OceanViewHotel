@@ -17,6 +17,17 @@
 <!-- Custom CSS -->
 <link rel="stylesheet" href="../css/bill.css">
 
+<style>
+    .bill-details { font-size: 1rem; }
+    .bill-row { display: flex; justify-content: space-between; padding: 0.4rem 0; }
+    .bill-row span { color: #555; }
+    .bill-total { font-size: 1.2rem; font-weight: 600; text-align: right; margin-top: 1rem; }
+    @media print {
+        .btn { display: none; }
+        nav, footer { display: none; }
+    }
+</style>
+
 </head>
 <body>
 
@@ -24,7 +35,7 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark shadow">
     <div class="container">
         <a class="navbar-brand fw-bold" href="#">
-            OceanView Staff 
+            <i class="bi bi-person-workspace"></i> OceanView Staff 
         </a>
     </div>
 </nav>
@@ -34,55 +45,47 @@
     <!-- Page Title -->
     <div class="text-center mb-4">
         <h2 class="fw-bold">Bill Summary</h2>
-        <p class="text-muted">Reservation payment details</p>
+        <p class="text-muted">Reservation Payment Details</p>
     </div>
 
     <!-- Bill Card -->
     <div class="card shadow-lg border-0 mx-auto" style="max-width: 600px;">
         <div class="card-body p-4">
 
-            <div class="bill-details">
-
+            <h5 class="text-primary mb-3">Guest Information</h5>
+            <div class="bill-details mb-3">
                 <div class="bill-row">
-                    <span>Reservation ID : </span>
+                    <span>Reservation ID:</span>
                     <strong>${reservationId}</strong>
                 </div>
-
                 <div class="bill-row">
-                    <span>Guest Name : </span>
+                    <span>Guest Name:</span>
                     <strong>${guestName}</strong>
                 </div>
-
                 <div class="bill-row">
-                    <span>Nights : </span>
+                    <span>Nights:</span>
                     <strong>${nights}</strong>
                 </div>
-
                 <div class="bill-row">
-                    <span>Price per Night (LKR) : </span>
+                    <span>Price per Night (LKR):</span>
                     <strong>${price}</strong>
                 </div>
+            </div>
 
-                <hr>
+            <hr>
 
-                <div class="bill-total">
-                    <span>Total Bill : </span>
-                    <strong>LKR ${totalBill}</strong>
-                </div>
-
+            <div class="bill-total text-success">
+                Total Bill: LKR <strong>${totalBill}</strong>
             </div>
 
             <!-- Buttons -->
             <div class="d-flex justify-content-between mt-4">
-
-                <a href="<%=request.getContextPath()%>/staff/staffDashboard.jsp" class="btn btn-secondary">
+                <a href="<%=request.getContextPath()%>/staff/staffDashboard.jsp" class="btn btn-outline-secondary">
                     <i class="bi bi-arrow-left"></i> Back
                 </a>
-
                 <button onclick="window.print()" class="btn btn-primary">
                     <i class="bi bi-printer"></i> Print Bill
                 </button>
-
             </div>
 
         </div>
@@ -92,7 +95,7 @@
 
 <!-- Footer -->
 <footer class="footer mt-5">
-    <div class="container text-center">
+    <div class="container text-center text-muted">
         <p>© 2026 OceanView Hotel Management System</p>
     </div>
 </footer>

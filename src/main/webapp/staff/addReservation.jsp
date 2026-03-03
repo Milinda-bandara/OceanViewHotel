@@ -8,7 +8,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
-<title>Add Reservation</title>
+<title>New Reservation - OceanView Staff</title>
 
 <!-- Bootstrap CSS -->
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -16,8 +16,18 @@
 <!-- Bootstrap Icons -->
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
 
-<!-- Custom CSS -->
-<link rel="stylesheet" href="../css/staffdashboard.css">
+<style>
+    .card {
+        border-radius: 12px;
+    }
+    .card-header {
+        font-weight: bold;
+        font-size: 1.1rem;
+    }
+    .form-label {
+        font-weight: 500;
+    }
+</style>
 
 </head>
 <body>
@@ -40,75 +50,69 @@
     </div>
 
     <!-- Reservation Card -->
-    <div class="card shadow-lg border-0">
+    <div class="card shadow-lg border-0 mx-auto" style="max-width: 600px;">
         <div class="card-body p-4">
 
+            <!-- Reservation Form -->
             <form method="post" action="<%=request.getContextPath()%>/AddReservationServlet">
 
                 <!-- Guest Name -->
                 <div class="mb-3">
                     <label class="form-label">Guest Name</label>
-                    <input type="text" name="guestName" class="form-control" required>
+                    <input type="text" name="guestName" class="form-control" placeholder="John Doe" required>
                 </div>
 
                 <!-- Address -->
                 <div class="mb-3">
                     <label class="form-label">Address</label>
-                    <input type="text" name="address" class="form-control" required>
+                    <input type="text" name="address" class="form-control" placeholder="Enter guest address" required>
                 </div>
 
-                <!-- Contact -->
+                <!-- Contact Number -->
                 <div class="mb-3">
                     <label class="form-label">Contact Number</label>
-                    <input type="text" name="contact" class="form-control" required>
+                    <input type="text" name="contact" class="form-control" placeholder="e.g. 0771234567" required>
                 </div>
 
                 <!-- Room Selection -->
                 <div class="mb-3">
                     <label class="form-label">Select Room</label>
                     <select name="roomId" class="form-select" required>
-
-<%
-    RoomDAO dao = new RoomDAO();
-    List<Room> rooms = dao.getAvailableRooms();
-    for(Room r : rooms) {
-%>
-        <option value="<%= r.getRoomId() %>">
-            Room <%= r.getRoomId() %> - <%= r.getRoomType() %> (Rs.<%= r.getPricePerNight() %>)
-        </option>
-<%
-    }
-%>
-
+                        <option value="">-- Choose Room --</option>
+                        <%
+                            RoomDAO dao = new RoomDAO();
+                            List<Room> rooms = dao.getAvailableRooms();
+                            for(Room r : rooms) {
+                        %>
+                        <option value="<%= r.getRoomId() %>">
+                            Room <%= r.getRoomId() %> - <%= r.getRoomType() %> (Rs.<%= r.getPricePerNight() %>)
+                        </option>
+                        <%
+                            }
+                        %>
                     </select>
                 </div>
 
                 <!-- Dates Row -->
                 <div class="row">
-
                     <div class="col-md-6 mb-3">
                         <label class="form-label">Check-in Date</label>
                         <input type="date" name="checkIn" class="form-control" required>
                     </div>
-
                     <div class="col-md-6 mb-3">
                         <label class="form-label">Check-out Date</label>
                         <input type="date" name="checkOut" class="form-control" required>
                     </div>
-
                 </div>
 
                 <!-- Buttons -->
                 <div class="d-flex justify-content-between mt-4">
-
                     <a href="staffDashboard.jsp" class="btn btn-secondary">
                         <i class="bi bi-arrow-left"></i> Back
                     </a>
-
                     <button type="submit" class="btn btn-primary">
                         <i class="bi bi-check-circle"></i> Add Reservation
                     </button>
-
                 </div>
 
             </form>
@@ -119,9 +123,9 @@
 </div>
 
 <!-- Footer -->
-<footer class="footer mt-5">
-    <div class="container text-center">
-        <p>© 2026 OceanView Hotel System</p>
+<footer class="footer mt-5 py-3 bg-light">
+    <div class="container text-center text-muted">
+        © 2026 OceanView Hotel System
     </div>
 </footer>
 
